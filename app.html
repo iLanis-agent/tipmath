@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tip Math - app</title>
+<style>
+  :root { --accent:#9a5b13; --ink:#2b2418; --paper:#faf6ee; --soft:#f1e8d6; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, "Times New Roman", serif; background:var(--paper); color:var(--ink); line-height:1.55; }
+  main { max-width:660px; margin:0 auto; }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  body { padding:2rem 1.2rem; }
+  h1 { font-size:1.8rem; color:var(--accent); }
+  .boundary { margin:1rem 0 1.4rem; }
+  .panel { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1rem 1.1rem; margin-bottom:1.1rem; }
+  h2 { font-size:1.1rem; margin-bottom:.6rem; }
+  p.note { font-size:.9rem; margin-bottom:.4rem; }
+  label { display:block; font-size:.9rem; margin:.45rem 0 .1rem; }
+  input { width:100%; padding:.45rem .55rem; font-size:1rem; border:1px solid #dccfb4; border-radius:6px; background:#fff; color:var(--ink); }
+  .out { margin-top:.7rem; font-size:.98rem; background:#fff; border:1px dashed #dccfb4; border-radius:6px; padding:.6rem .7rem; min-height:2.4rem; }
+  .out.err { border-color:#b03030; color:#8a1f1f; }
+  footer { margin-top:1.8rem; font-size:.85rem; color:#6e6450; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tip Math</h1>
+  <div class="boundary">
+    <strong>Boundary: arithmetic only</strong>
+    You choose the tip percent and whether it goes on the tax. This page never says what to leave.
+  </div>
+
+  <div class="panel">
+    <h2>The tip truth</h2>
+    <p class="note">Your percent, on the amount you chose.</p>
+    <label for="t-bill">Bill before tax (dollars)</label>
+    <input id="t-bill" type="number" min="0" step="0.01" value="48.60">
+    <label for="t-pct">Tip percent you chose</label>
+    <input id="t-pct" type="number" min="0" max="100" step="0.5" value="20">
+    <div class="out" id="t-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The tax truth</h2>
+    <p class="note">Tipping on the pre-tax or the post-tax number.</p>
+    <label for="x-bill">Bill before tax (dollars)</label>
+    <input id="x-bill" type="number" min="0" step="0.01" value="100">
+    <label for="x-tax">Tax percent</label>
+    <input id="x-tax" type="number" min="0" max="100" step="0.001" value="8">
+    <label for="x-pct">Tip percent you chose</label>
+    <input id="x-pct" type="number" min="0" max="100" step="0.5" value="20">
+    <div class="out" id="x-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The split truth</h2>
+    <p class="note">Whole cents, nobody shorted.</p>
+    <label for="s-total">Total to split (dollars)</label>
+    <input id="s-total" type="number" min="0" step="0.01" value="127.43">
+    <label for="s-people">People</label>
+    <input id="s-people" type="number" min="1" step="1" value="4">
+    <div class="out" id="s-out"></div>
+  </div>
+
+  <footer>Tip Math is exact arithmetic in whole cents over the numbers you enter. <a href="index.html">Why it exists</a>.</footer>
+</main>
+<script src="engine.js"></script>
+<script>
+  const num = (id) => Number(document.getElementById(id).value);
+  function show(out, fn) {
+    try { out.textContent = fn(); out.classList.remove("err"); }
+    catch (e) { out.textContent = e.message; out.classList.add("err"); }
+  }
+  const tOut = document.getElementById("t-out");
+  const xOut = document.getElementById("x-out");
+  const sOut = document.getElementById("s-out");
+  function recalc() {
+    show(tOut, () => tipTruth(num("t-bill"), num("t-pct")));
+    show(xOut, () => taxTruth(num("x-bill"), num("x-tax"), num("x-pct")));
+    show(sOut, () => splitTruth(num("s-total"), num("s-people")));
+  }
+  document.querySelectorAll("input").forEach((el) => {
+    el.addEventListener("input", recalc);
+    el.addEventListener("change", recalc);
+  });
+  recalc();
+</script>
+</body>
+</html>
