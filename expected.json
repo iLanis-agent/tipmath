@@ -1,0 +1,134 @@
+[
+  {
+    "fn": "tipTruth",
+    "args": [
+      48.6,
+      20
+    ],
+    "expected": "20% of $48.60 is $9.72 - the check comes to $58.32."
+  },
+  {
+    "fn": "tipTruth",
+    "args": [
+      86.4,
+      18
+    ],
+    "expected": "18% of $86.40 is $15.55 - the check comes to $101.95."
+  },
+  {
+    "fn": "tipTruth",
+    "args": [
+      1234.5,
+      15
+    ],
+    "expected": "15% of $1,234.50 is $185.18 - the check comes to $1,419.68."
+  },
+  {
+    "fn": "tipTruth",
+    "args": [
+      50,
+      0
+    ],
+    "expected": "0% of $50.00 is $0.00 - the check comes to $50.00."
+  },
+  {
+    "fn": "tipTruth",
+    "args": [
+      0,
+      20
+    ],
+    "expected": "ERR:enter a bill over $0"
+  },
+  {
+    "fn": "tipTruth",
+    "args": [
+      50,
+      120
+    ],
+    "expected": "ERR:tip percent must be 0 to 100"
+  },
+  {
+    "fn": "taxTruth",
+    "args": [
+      48.6,
+      8.875,
+      20
+    ],
+    "expected": "Tip on $48.60 is $9.72; on $52.91 with tax it is $10.58 - tipping on the tax costs $0.86 more."
+  },
+  {
+    "fn": "taxTruth",
+    "args": [
+      100,
+      8,
+      20
+    ],
+    "expected": "Tip on $100.00 is $20.00; on $108.00 with tax it is $21.60 - tipping on the tax costs $1.60 more."
+  },
+  {
+    "fn": "taxTruth",
+    "args": [
+      50,
+      0,
+      20
+    ],
+    "expected": "Tip on $50.00 is $10.00; on $50.00 with tax it is $10.00 - no difference."
+  },
+  {
+    "fn": "taxTruth",
+    "args": [
+      50,
+      8,
+      -1
+    ],
+    "expected": "ERR:tip percent must be 0 to 100"
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      127.43,
+      4
+    ],
+    "expected": "$127.43 across 4 is $31.85 each with 3 cents left over - 3 people pay $31.86 and 1 pays $31.85."
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      120,
+      4
+    ],
+    "expected": "$120.00 across 4 is $30.00 each, exactly."
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      100.01,
+      2
+    ],
+    "expected": "$100.01 across 2 is $50.00 each with 1 cent left over - 1 person pays $50.01 and 1 pays $50.00."
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      99.99,
+      1
+    ],
+    "expected": "$99.99 for one person is $99.99."
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      127.43,
+      0
+    ],
+    "expected": "ERR:people must be a whole number, at least 1"
+  },
+  {
+    "fn": "splitTruth",
+    "args": [
+      127.43,
+      2.5
+    ],
+    "expected": "ERR:people must be a whole number, at least 1"
+  }
+]
